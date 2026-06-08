@@ -632,6 +632,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     );
   });
 
+  // Education
+  gsap.utils.toArray('.edu-card').forEach((c, i) => {
+    gsap.fromTo(c,
+      { opacity: 0, y: 40, scale: 0.95 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.8, delay: i * 0.15, ease: 'power3.out', scrollTrigger: st(c) }
+    );
+  });
+
   // Projects
   gsap.utils.toArray('.project-card').forEach((c, i) => {
     gsap.fromTo(c,
@@ -668,7 +676,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 })();
 
 function initFallbackReveal() {
-  const sels = '.section-header, .about-photo-wrap, .about-text, .stat-card, .skill-category, .timeline-item, .project-card, .achievement-card, .cert-card, .contact-info, .contact-form-wrap';
+  const sels = '.section-header, .about-photo-wrap, .about-text, .stat-card, .skill-category, .timeline-item, .edu-card, .project-card, .achievement-card, .cert-card, .contact-info, .contact-form-wrap';
   const els = document.querySelectorAll(sels);
   els.forEach(el => el.classList.add('reveal'));
   // Re-trigger on both enter and exit (only when 100% off-screen) so it works scrolling up too
