@@ -571,13 +571,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Shared ScrollTrigger config — animates every time element enters/leaves view
+  // Shared ScrollTrigger config
+  // play       → animate in when entering viewport (scroll down)
+  // none       → stay visible when scrolled past (do NOT hide)
+  // none       → stay visible when re-entering from top (scroll up)
+  // reset      → reset to hidden only when fully scrolled above start point
+  //              so it replays next time you scroll down
   const st = (trigger, extra = {}) => ({
     trigger,
     start: 'top 88%',
-    end: 'top 20%',
-    toggleActions: 'play reverse play reverse',
+    toggleActions: 'play none none reset',
     ...extra
+
   });
 
   // Section headers
