@@ -573,16 +573,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
   // Shared ScrollTrigger config
   // play       → animate in when entering viewport (scroll down)
-  // none       → stay visible when scrolled past (do NOT hide)
-  // none       → stay visible when re-entering from top (scroll up)
-  // reset      → reset to hidden only when fully scrolled above start point
-  //              so it replays next time you scroll down
+  // reset      → reset to hidden when scrolled past top (completely off-screen)
+  // play       → animate in when entering viewport from top (scroll up)
+  // reset      → reset to hidden when scrolled past bottom (completely off-screen)
   const st = (trigger, extra = {}) => ({
     trigger,
-    start: 'top 88%',
-    toggleActions: 'play none none reset',
+    start: 'top 100%',
+    end: 'bottom 0%',
+    toggleActions: 'play reset play reset',
     ...extra
-
   });
 
   // Section headers
@@ -672,7 +671,7 @@ function initFallbackReveal() {
   const sels = '.section-header, .about-photo-wrap, .about-text, .stat-card, .skill-category, .timeline-item, .project-card, .achievement-card, .cert-card, .contact-info, .contact-form-wrap';
   const els = document.querySelectorAll(sels);
   els.forEach(el => el.classList.add('reveal'));
-  // Re-trigger on both enter and exit so it works scrolling up too
+  // Re-trigger on both enter and exit (only when 100% off-screen) so it works scrolling up too
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -681,7 +680,7 @@ function initFallbackReveal() {
         e.target.classList.remove('revealed');
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0 });
   els.forEach(el => obs.observe(el));
 }
 
